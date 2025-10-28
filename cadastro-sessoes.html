@@ -1,87 +1,89 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cadastrar Sessões • MovieBox</title>
-  <link rel="stylesheet" href="./CSS/bootstrap.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastro de Sessões</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- NAVBAR (Sessões ativo) -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="./índice.html">🎬 MovieBox</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <a class="navbar-brand" href="index.html">Cinema</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div id="navMain" class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="./cadastro-filmes.html">Filmes</a></li>
-          <li class="nav-item"><a class="nav-link" href="./cadastro-salas.html">Salas</a></li>
-          <li class="nav-item"><a class="nav-link active" href="./cadastro-sessoes.html">Sessões</a></li>
-          <li class="nav-item"><a class="nav-link" href="./sessões.html">Lista</a></li>
-          <li class="nav-item"><a class="nav-link" href="./venda-ingressos.html">Venda</a></li>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="cadastro-filmes.html">Filmes</a></li>
+          <li class="nav-item"><a class="nav-link" href="cadastro-salas.html">Salas</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cadastro-sessoes.html">Sessões</a></li>
+          <li class="nav-item"><a class="nav-link" href="sessoes.html">Listar Sessões</a></li>
+          <li class="nav-item"><a class="nav-link" href="venda-ingressos.html">Venda</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <main class="container py-4">
-    <h2 class="mb-3">Cadastro de Sessões</h2>
-
-    <form onsubmit="return salvarSessao(event)" class="row g-3">
-      <div class="col-12 col-md-6">
-        <div class="form-floating">
-          <select id="idFilme" class="form-select"></select>
-          <label for="idFilme">Filme</label>
-        </div>
+  <main class="container">
+    <h2>Cadastro de Sessões</h2>
+    <form id="form-sessao" class="row g-3">
+      <div class="col-md-5">
+        <label class="form-label">Filme</label>
+        <select class="form-select" id="filmeId" name="filmeId" required></select>
       </div>
-
-      <div class="col-12 col-md-6">
-        <div class="form-floating">
-          <select id="idSala" class="form-select"></select>
-          <label for="idSala">Sala</label>
-        </div>
+      <div class="col-md-4">
+        <label class="form-label">Sala</label>
+        <select class="form-select" id="salaId" name="salaId" required></select>
       </div>
-
-      <div class="col-12 col-md-4">
-        <div class="form-floating">
-          <input id="idDataHora" type="datetime-local" class="form-control" placeholder="Data/hora">
-          <label for="idDataHora">Data e Hora</label>
-        </div>
+      <div class="col-md-3">
+        <label class="form-label">Data e Hora</label>
+        <input class="form-control" type="datetime-local" name="dataHora" required>
       </div>
-
-      <div class="col-6 col-md-3">
-        <div class="form-floating">
-          <input id="idPreco" type="number" min="0" step="0.01" class="form-control" placeholder="30.00">
-          <label for="idPreco">Preço (R$)</label>
-        </div>
+      <div class="col-md-3">
+        <label class="form-label">Preço</label>
+        <input class="form-control" type="number" name="preco" min="0" step="0.01" required>
       </div>
-
-      <div class="col-6 col-md-3">
-        <div class="form-floating">
-          <select id="idIdioma" class="form-select">
-            <option>Dublado</option><option>Legendado</option>
-          </select>
-          <label for="idIdioma">Idioma</label>
-        </div>
+      <div class="col-md-3">
+        <label class="form-label">Idioma</label>
+        <select class="form-select" name="idioma" required>
+          <option>Dublado</option>
+          <option>Legendado</option>
+        </select>
       </div>
-
-      <div class="col-12 col-md-2">
-        <div class="form-floating">
-          <select id="idFormato" class="form-select">
-            <option>2D</option><option>3D</option>
-          </select>
-          <label for="idFormato">Formato</label>
-        </div>
+      <div class="col-md-3">
+        <label class="form-label">Formato</label>
+        <select class="form-select" name="formato" required>
+          <option>2D</option>
+          <option>3D</option>
+        </select>
       </div>
-
       <div class="col-12">
-        <button id="btnSalvarSessao" class="btn btn-primary w-100">Salvar Sessão</button>
+        <button class="btn btn-success" type="submit">Salvar Sessão</button>
       </div>
     </form>
+    <div id="msg-sessao" class="mt-3"></div>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="./js/app.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js.cinema/app.js"></script>
+  <script>
+    function carregarSelects(){
+      fillSelect('filmeId', getAll('filmes'), f => [f.id, f.titulo]);
+      fillSelect('salaId', getAll('salas'), s => [s.id, s.nome]);
+    }
+    carregarSelects();
+    document.getElementById('form-sessao').addEventListener('submit', function(e){
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this).entries());
+      data.id = cuid();
+      data.preco = Number(data.preco);
+      addItem('sessoes', data);
+      this.reset();
+      document.getElementById('msg-sessao').innerHTML = '<div class="alert alert-success">Sessão salva!</div>';
+      carregarSelects();
+    });
+  </script>
 </body>
 </html>

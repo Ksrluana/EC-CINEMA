@@ -1,65 +1,74 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cadastrar Salas • MovieBox</title>
-  <link rel="stylesheet" href="./CSS/bootstrap.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastro de Salas</title>
+  <!-- Caminhos corrigidos: SEM barra inicial -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- NAVBAR (Salas ativo) -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="./índice.html">🎬 MovieBox</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <a class="navbar-brand" href="index.html">Cinema</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div id="navMain" class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="./cadastro-filmes.html">Filmes</a></li>
-          <li class="nav-item"><a class="nav-link active" href="./cadastro-salas.html">Salas</a></li>
-          <li class="nav-item"><a class="nav-link" href="./cadastro-sessoes.html">Sessões</a></li>
-          <li class="nav-item"><a class="nav-link" href="./sessões.html">Lista</a></li>
-          <li class="nav-item"><a class="nav-link" href="./venda-ingressos.html">Venda</a></li>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="cadastro-filmes.html">Filmes</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cadastro-salas.html">Salas</a></li>
+          <li class="nav-item"><a class="nav-link" href="cadastro-sessoes.html">Sessões</a></li>
+          <li class="nav-item"><a class="nav-link" href="sessoes.html">Listar Sessões</a></li>
+          <li class="nav-item"><a class="nav-link" href="venda-ingressos.html">Venda</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <main class="container py-4">
-    <h2 class="mb-3">Cadastro de Salas</h2>
-
-    <form onsubmit="return salvarSala(event)" class="row g-3">
-      <div class="col-12 col-md-6">
-        <div class="form-floating">
-          <input id="idNomeSala" type="text" class="form-control" placeholder="Sala 01">
-          <label for="idNomeSala">Nome da Sala</label>
-        </div>
+  <main class="container">
+    <h2>Cadastro de Salas</h2>
+    <form id="form-sala" class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Nome da Sala</label>
+        <input class="form-control" name="nome" required>
       </div>
-
-      <div class="col-6 col-md-3">
-        <div class="form-floating">
-          <input id="idCapacidade" type="number" min="1" class="form-control" placeholder="100">
-          <label for="idCapacidade">Capacidade</label>
-        </div>
+      <div class="col-md-3">
+        <label class="form-label">Capacidade</label>
+        <input class="form-control" name="capacidade" type="number" min="1" required>
       </div>
-
-      <div class="col-6 col-md-3">
-        <div class="form-floating">
-          <select id="idTipoSala" class="form-select">
-            <option selected disabled>Selecione…</option>
-            <option>2D</option><option>3D</option><option>IMAX</option>
-          </select>
-          <label for="idTipoSala">Tipo</label>
-        </div>
+      <div class="col-md-3">
+        <label class="form-label">Tipo</label>
+        <select class="form-select" name="tipo" required>
+          <option value="">Selecione</option>
+          <option>2D</option>
+          <option>3D</option>
+          <option>IMAX</option>
+        </select>
       </div>
-
       <div class="col-12">
-        <button class="btn btn-primary">Salvar Sala</button>
+        <button class="btn btn-success" type="submit">Salvar Sala</button>
       </div>
     </form>
+    <div id="msg-sala" class="mt-3"></div>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="./js/app.js"></script>
+  <!-- Caminhos corrigidos -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js.cinema/app.js"></script>
+
+  <script>
+    document.getElementById('form-sala').addEventListener('submit', function(e){
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(this).entries());
+      data.id = cuid();
+      data.capacidade = Number(data.capacidade);
+      addItem('salas', data);
+      this.reset();
+      document.getElementById('msg-sala').innerHTML =
+        '<div class="alert alert-success">Sala salva com sucesso!</div>';
+    });
+  </script>
 </body>
 </html>

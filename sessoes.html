@@ -1,50 +1,68 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sessões Disponíveis • MovieBox</title>
-  <link rel="stylesheet" href="./CSS/bootstrap.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sessões Disponíveis</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- NAVBAR (Lista ativo) -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="./índice.html">🎬 MovieBox</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <a class="navbar-brand" href="index.html">Cinema</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div id="navMain" class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="./cadastro-filmes.html">Filmes</a></li>
-          <li class="nav-item"><a class="nav-link" href="./cadastro-salas.html">Salas</a></li>
-          <li class="nav-item"><a class="nav-link" href="./cadastro-sessoes.html">Sessões</a></li>
-          <li class="nav-item"><a class="nav-link active" href="./sessões.html">Lista</a></li>
-          <li class="nav-item"><a class="nav-link" href="./venda-ingressos.html">Venda</a></li>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="cadastro-filmes.html">Filmes</a></li>
+          <li class="nav-item"><a class="nav-link" href="cadastro-salas.html">Salas</a></li>
+          <li class="nav-item"><a class="nav-link" href="cadastro-sessoes.html">Sessões</a></li>
+          <li class="nav-item"><a class="nav-link active" href="sessoes.html">Listar Sessões</a></li>
+          <li class="nav-item"><a class="nav-link" href="venda-ingressos.html">Venda</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <main class="container py-4">
-    <h2 class="mb-3">Sessões Disponíveis</h2>
-    <div class="table-responsive">
-      <table class="table table-striped table-hover align-middle">
-        <thead class="table-dark">
-          <tr>
-            <th>Filme</th>
-            <th>Sala</th>
-            <th>Data/Hora</th>
-            <th>Idioma/Formato</th>
-            <th>Preço</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="tabelaSessoes"></tbody>
-      </table>
-    </div>
+  <main class="container">
+    <h2>Sessões Disponíveis</h2>
+    <div id="lista-sessoes" class="row g-3"></div>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="./js/app.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js.cinema/app.js"></script>
+  <script>
+    function render(){
+      const container = document.getElementById('lista-sessoes');
+      const filmes = indexById(getAll('filmes'));
+      const salas = indexById(getAll('salas'));
+      const ss = getAll('sessoes');
+      container.innerHTML = '';
+      if(!ss.length){
+        container.innerHTML = '<div class="alert alert-warning">Nenhuma sessão cadastrada.</div>';
+        return;
+      }
+      ss.forEach(s => {
+        const filme = filmes[s.filmeId];
+        const sala = salas[s.salaId];
+        const card = document.createElement('div');
+        card.className = 'col-md-6';
+        card.innerHTML = `
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">${filme? filme.titulo : 'Filme removido'}</h5>
+              <p class="card-text mb-1"><strong>Sala:</strong> ${sala? sala.nome : 'Sala removida'}</p>
+              <p class="card-text mb-1"><strong>Data e Hora:</strong> ${toBrDateTime(s.dataHora)}</p>
+              <p class="card-text mb-3"><strong>Preço:</strong> R$ ${Number(s.preco).toFixed(2)}</p>
+              <a class="btn btn-primary" href="venda-ingressos.html?sessao=${s.id}">Comprar Ingresso</a>
+            </div>
+          </div>`;
+        container.appendChild(card);
+      });
+    }
+    render();
+  </script>
 </body>
 </html>
