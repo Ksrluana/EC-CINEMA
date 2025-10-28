@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastrar Sessões • MovieBox</title>
+  <link rel="stylesheet" href="./CSS/bootstrap.min.css">
+</head>
+<body>
+  <!-- NAVBAR (Sessões ativo) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="./índice.html">🎬 MovieBox</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navMain" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="./cadastro-filmes.html">Filmes</a></li>
+          <li class="nav-item"><a class="nav-link" href="./cadastro-salas.html">Salas</a></li>
+          <li class="nav-item"><a class="nav-link active" href="./cadastro-sessoes.html">Sessões</a></li>
+          <li class="nav-item"><a class="nav-link" href="./sessões.html">Lista</a></li>
+          <li class="nav-item"><a class="nav-link" href="./venda-ingressos.html">Venda</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <h2 class="mb-3">Cadastro de Sessões</h2>
+
+    <form onsubmit="return salvarSessao(event)" class="row g-3">
+      <div class="col-12 col-md-6">
+        <div class="form-floating">
+          <select id="idFilme" class="form-select"></select>
+          <label for="idFilme">Filme</label>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="form-floating">
+          <select id="idSala" class="form-select"></select>
+          <label for="idSala">Sala</label>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="form-floating">
+          <input id="idDataHora" type="datetime-local" class="form-control" placeholder="Data/hora">
+          <label for="idDataHora">Data e Hora</label>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="form-floating">
+          <input id="idPreco" type="number" min="0" step="0.01" class="form-control" placeholder="30.00">
+          <label for="idPreco">Preço (R$)</label>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="form-floating">
+          <select id="idIdioma" class="form-select">
+            <option>Dublado</option><option>Legendado</option>
+          </select>
+          <label for="idIdioma">Idioma</label>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-2">
+        <div class="form-floating">
+          <select id="idFormato" class="form-select">
+            <option>2D</option><option>3D</option>
+          </select>
+          <label for="idFormato">Formato</label>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <button id="btnSalvarSessao" class="btn btn-primary w-100">Salvar Sessão</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
